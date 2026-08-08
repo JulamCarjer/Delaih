@@ -1,0 +1,635 @@
+/* --- RESET & BASE STYLES --- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #050505;
+    color: #ececec;
+    font-family: 'funnel display';
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+/* --- HEADER --- ====================================================================================================================================================================*/
+
+.app-header {
+    border-bottom: 1px solid #1a1a1a;
+    background-color: #000000;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.header-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-name {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: 'funnel display';
+}
+
+.nav-tabs {
+    background-color: #111111;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #222222;
+    display: flex;
+    gap: 4px;
+}
+
+.tab-btn {
+    padding: 6px 24px;
+    border-radius: 3px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.9s;
+    font-family: 'funnel display';
+}
+
+.tab-btn:hover {
+    color: #ffffff;
+}
+
+.tab-btn.active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
+/* --- MAIN LAYOUT --- ====================================================================================================================================================================*/
+
+.main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    flex: 1;
+    width: 100%;
+}
+
+.tab-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+/* --- FRAME TEMPLATE  --- ==================================================================================================================================================================== */
+
+.grid-templates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 868px) {
+    .grid-templates {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 540px) {
+    .grid-templates {
+        grid-template-columns: 1fr;
+    }
+}
+
+.frame-card-mockup {
+    background-color: #ffffff;
+    padding: 10px 10px 20px 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 9px 20px rgba(53, 53, 53, 0.5);
+}
+
+.frame-card-mockup:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.15);
+}
+
+.mockup-img-wrapper {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-color: #111;
+    overflow: hidden;
+}
+
+.mockup-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mockup-bottom-bar {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: #000000;
+}
+
+.mockup-exif {
+    font-size: 10px;
+    font-family: sans-serif;
+    color: #000000;
+    line-height: 1.9;
+}
+
+.mockup-logo-area {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.mockup-logo-area img {
+    height: 14px;
+    max-width: 80px;
+    object-fit: contain;
+}
+
+.template-footer-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.btn-other-template {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: auto;
+    padding: 10px 70px;
+    margin: 30px auto 0 auto;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.btn-other-template:hover {
+    background-color: #e4e4e7;
+}
+
+
+/* --- EDITOR VIEW --- ====================================================================================================================================================================*/
+
+.editor-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+@media (min-width: 900px) {
+    .editor-grid {
+        grid-template-columns: 5fr 6fr;
+    }
+}
+
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.canvas-wrapper {
+    width: 100%;
+    background-color: #111111;
+    padding: 20px;
+    border-radius: 3px;
+    border: 1px solid #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+}
+
+.controls-container {
+    background-color: #111111;
+    padding: 24px;
+    border-radius: 3px;
+    border: 1px solid #222222;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.custom-select,
+.custom-input {
+    width: 100%;
+    background-color: #18181b;
+    border: 1px solid #27272a;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+.btn-upload {
+    width: 100%;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 3px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+
+/* LOGO SELECTOR DROPDOWN ====================================================================================================================================================================*/
+
+.dropdown-container {
+    position: relative;
+}
+
+.logo-selector-trigger {
+    display: flex;
+    align-items: center;
+    background-color: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.logo-preview-box {
+    width: 70px;
+    height: 44px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+.logo-preview-box img {
+    max-height: 28px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.logo-selector-info {
+    flex: 1;
+    padding: 0 16px;
+    font-size: 0.875rem;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-popover {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 50;
+}
+
+.popover-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.logo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.logo-btn {
+    background: transparent;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    padding: 6px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.logo-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.logo-btn img {
+    max-height: 24px;
+    object-fit: contain;
+}
+
+.custom-logo-wrapper {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+.btn-custom-logo {
+    width: 100%;
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
+
+
+/* EXIF & CONTROL SLIDERS ====================================================================================================================================================================*/
+
+.exif-box,
+.settings-box {
+    background-color: #18181b;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #27272a;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.exif-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #888888;
+}
+
+.status-badge-success {
+    color: #34d399;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.color-picker-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-picker {
+    width: 40px;
+    height: 32px;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    border: 1px solid #3f3f46;
+}
+
+.quick-colors {
+    height: 28px;
+    flex: 1;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+}
+
+.color-btn {
+    flex: 1;
+    border: none;
+    cursor: pointer;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.bg-black {
+    background-color: #000000;
+}
+
+.bg-dark {
+    background-color: #18181b;
+}
+
+.slider-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #888888;
+    margin-bottom: 4px;
+}
+
+.custom-range {
+    width: 100%;
+    accent-color: #ffffff;
+}
+
+.btn-save {
+    width: 227%;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 3px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+}
+
+
+/* Contact & Copyright ====================================================================================================================================================================*/
+
+.app-footer {
+    border-top: 1px solid #2b2b2b;
+    background-color: #131313;
+    padding: 50px 0 20px 0;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-brand h3 {
+    font-size: 0.9rem;
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.footer-brand p {
+    font-size: 1rem;
+    color: #777777;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: #ffffff;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-copyright {
+    max-width: 1100px;
+    margin: 30px auto 0 auto;
+    padding: 20px 24px 0 24px;
+    border-top: 1px solid #2b2b2b;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #858585;
+}
+
+
+/* Container Utama Pratinjau */
+
+#preview-container {
+    position: relative;
+    width: 100%;
+    /* Gunakan aspect-ratio agar container mengikuti rasio foto standar */
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    /* Warna dasar jika foto belum ada */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/* Lapisan 1: Canvas Foto (Paling Bawah) */
+
+#photo-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Pastikan foto tidak distorsi di dalam container */
+    object-fit: contain;
+    z-index: 1;
+    /* Di bawah */
+}
+
+
+/* Lapisan 2: Overlay SVG (Di Atas Canvas) */
+
+#svg-overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    /* Di atas */
+    /* [KUNCI FIX] Agar klik tembus ke elemen di bawahnya */
+    pointer-events: none;
+}
+
+
+/* Pastikan SVG yang dimasukkan mengisi penuh container */
+
+#svg-overlay-container svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.slider-group {
+    margin-bottom: 16px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.slider-header span {
+    font-weight: 500;
+    color: #aaaaaa;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+
+/*============================================================================================================================================================================================================================================================
+/* Sesuaikan Grid agar mendukung tinggi kartu yang fleksibel */
