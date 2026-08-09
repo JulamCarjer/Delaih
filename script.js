@@ -38,7 +38,7 @@ const mockupTemplates = [{
         photo: 'Foto/kucing.jpg',
         logo: 'kamera/yashica.svg',
         exif: 'F4 | 1/125s | ISO400 | 23.5mm',
-        camera: 'YASHICA'
+        camera: 'sony'
     },
     {
         id: '2',
@@ -59,7 +59,7 @@ const mockupTemplates = [{
     {
         id: '4',
         styleType: 'centered', // Layout Logo Tengah (Bangunan)
-        photo: 'Foto/Bangunan.jpg',
+        photo: 'Foto/kucing.jpg',
         logo: 'kamera/yashica.svg',
         exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
         camera: 'YASHICA'
@@ -67,7 +67,7 @@ const mockupTemplates = [{
     {
         id: '5',
         styleType: 'centered', // Layout Logo Tengah (Bangunan)
-        photo: 'Foto/Bangunan.jpg',
+        photo: 'Foto/kucing.jpg',
         logo: 'kamera/yashica.svg',
         exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
         camera: 'YASHICA'
@@ -75,7 +75,7 @@ const mockupTemplates = [{
     {
         id: '6',
         styleType: 'centered', // Layout Logo Tengah (Bangunan)
-        photo: 'Foto/Bangunan.jpg',
+        photo: 'Foto/kucing.jpg',
         logo: 'kamera/yashica.svg',
         exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
         camera: 'YASHICA'
@@ -110,12 +110,13 @@ function renderTemplateGrid() {
 
 //Mini canvas
 function renderMiniCanvas(canvas, ctx, img, logoImg, template) {
+    if (!canvas || !ctx || !img) return;
     const activeStyle = template.styleType || 'classic-right';
 
     // 1. HITUNG BORDER BERDASARKAN SISI TERPENDEK FOTO
     const baseDimension = Math.min(img.width, img.height);
 
-    let borderRatio = 0.05; // Border samping & atas tipis proporsional
+    let borderRatio = 0.035; // Border samping & atas tipis proporsional
     let barRatio = 0.12; // Bottom bar pas untuk 2 baris teks
 
     if (activeStyle === 'polaroid-thick') {
@@ -687,11 +688,10 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         ctx.textAlign = "left";
 
         // --- ATUR JARAK POSISI TEKS DI SINI ---
-        // Ubah offsetY (misal: 20, 30, 50) untuk menurunkan teks EXIF ke bawah
-        const offsetY = 30;
+        const offsetY = 900;
 
         // Ubah offsetX jika ingin menggeser posisi horizontal dari tepi kanan
-        const offsetX = 0;
+        const offsetX = 90;
 
         // BARIS 1: Tipe Kamera (Paling Besar & Bold)
         const cameraFontSize = Math.round(baseFontSize * 1.5);
@@ -705,7 +705,8 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         // BARIS 2: Data EXIF (Ukuran Standar)
         ctx.fillStyle = textColor === '#FFFFFF' ? '#CCCCCC' : '#000000';
         ctx.font = `500 ${baseFontSize}px monospace`;
-        ctx.fillText(exifString, xPos, yCenter);
+        const offsetTurun = 150;
+        ctx.fillText(exifString, xPos, yCenter + offsetTurun);
 
 
         // BARIS 3: Shot By & Tanggal (Kecil & Berdampingan)
@@ -720,14 +721,14 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
 
         ctx.fillText(subText, xPos, yCenter + (baseFontSize * 1.1));
 
-        // LOGO KAMERA (Posisi Kanan)
+        // LOGO KAMERA (Posisi Kanan) ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
-            const baseLogoHeight = borderBottom * 0.35;
+            const baseLogoHeight = borderBottom * 0.30;
             const logoTargetHeight = Math.round(baseLogoHeight * logoScale);
             const logoTargetWidth = Math.round(logoTargetHeight * logoAspect);
 
             const logoX = canvas.width - (borderSide * 1.5) - logoTargetWidth;
-            const logoY = yCenter - (logoTargetHeight / 2);
+            const logoY = yCenter - (logoTargetHeight / 3);
 
             ctx.drawImage(logoImg, logoX, logoY, logoTargetWidth, logoTargetHeight);
 
@@ -776,6 +777,7 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         }
     }
 }
+
 
 
 
