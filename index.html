@@ -4,12 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delaih - Frame & Watermark</title>
+    <title>Delaih - Frame & Watermark Camera Generator</title>
 
-    <!-- Tambahkan baris ini untuk Favicon -->
-    <link rel="icon" type="image/svg" href="Logo Delaih Putih.svg">
+    <link rel="icon" type="image/svg+xml" href="Logo Delaih Putih.svg">
+
+    <!-- Style CSS Utama -->
+    <link rel="stylesheet" href="style.css">
+
     <!-- EXIF JS CDN (Untuk Otomatisasi Metadata Foto) -->
     <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+
     <!-- Font Awesome Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -59,13 +63,15 @@
                     </div>
 
                     <!-- Preset Style Selector -->
-                    <div class="full-width">
-                        <select id="quick-frame-select" onchange="changeFrameStyle(this.value)" class="custom-select">
-                            <option value="minimal-bottom">Frame Minimal White Bottom Bar</option>
-                            <option value="polaroid-classic">Frame Polaroid Classic</option>
-                            <option value="dark-modern">Frame Dark Modern</option>
-                
-                        </select>
+                    <div class="frame-select-wrapper">
+                        <!-- Label indikator nama frame (opsional) -->
+                        <div id="frame-title-display" class="frame-title-tag">Frame Minimal White Bottom Bar</div>
+                        <div class="full-width">
+                            <!-- Kotak Teks Penanda (Otomatis Diupdate oleh renderGenericFrame) -->
+                            <div id="quick-frame-display" class="frame-indicator-box">
+                                Frame Minimal White Bottom Bar
+                            </div>
+                        </div>
                     </div>
                 </div>
 
