@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delaih - Frame & Watermark Camera Generator</title>
+    <title>Delaih - Frame & Watermark</title>
 
-    <!-- Style CSS Utama -->
-    <link rel="stylesheet" href="style.css">
-
+    <!-- Favicon (Ikon Tab Browser) -->
+    <link rel="icon" type="image/svg+xml" href="Logo Delaih Putih.svg">
     <!-- EXIF JS CDN (Untuk Otomatisasi Metadata Foto) -->
     <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-
     <!-- Font Awesome Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -23,7 +21,7 @@
         <div class="header-container">
             <div class="brand-logo">
                 <a href="https://www.instagram.com/julam_carjer/" class="a-content" data-page="brand-logo">
-                    <img width="40px" height="40px" src="Logo Delaih Putih.svg">
+                    <img width="40px" height="40px" src="Logo Delaih Putih.svg" alt="Delaih Logo">
                 </a>
                 <span class="brand-name">Delaih</span>
             </div>
@@ -43,11 +41,9 @@
         <section id="tab-template" class="tab-section">
             <div id="template-grid" class="grid-templates"></div>
 
-            <!-- Button Other Template -->
-            <!-- Ubah dari 'Other Template' menjadi 'Edit' dan panggil fungsi switchTab('edit') -->
-            <button onclick="switchTab('edit')" class="btn-other-template">Edit <i class="fa-solid fa-arrow-right"></i>
+            <button onclick="switchTab('edit')" class="btn-other-template">
+                Edit <i class="fa-solid fa-arrow-right"></i>
             </button>
-            </div>
         </section>
 
         <!-- TAB 2: EDIT VIEW -->
@@ -61,15 +57,12 @@
                     </div>
 
                     <!-- Preset Style Selector -->
-                    <div class="frame-select-wrapper">
-                        <!-- Label indikator nama frame (opsional) -->
-                        <div id="frame-title-display" class="frame-title-tag">Frame Minimal White Bottom Bar</div>
-                        <div class="full-width">
-                            <!-- Kotak Teks Penanda (Otomatis Diupdate oleh renderGenericFrame) -->
-                            <div id="quick-frame-display" class="frame-indicator-box">
-                                Frame Minimal White Bottom Bar
-                            </div>
-                        </div>
+                    <div class="full-width">
+                        <select id="quick-frame-select" onchange="changeFrameStyle(this.value)" class="custom-select">
+                            <option value="minimal-bottom">Frame Minimal White Bottom Bar</option>
+                            <option value="polaroid-classic">Frame Polaroid Classic</option>
+                            <option value="dark-modern">Frame Dark Modern</option>
+                        </select>
                     </div>
                 </div>
 
@@ -96,7 +89,6 @@
                             </div>
                         </div>
 
-
                         <!-- Popover Menu Grid Logo Kamera -->
                         <div id="logo-grid-menu" class="logo-popover hidden">
                             <div class="popover-title">PILIH LOGO KAMERA:</div>
@@ -106,7 +98,7 @@
                                     <img src="kamera/Sony.svg" alt="Sony">
                                 </button>
 
-                                <!-- Logo canon -->
+                                <!-- Logo Canon -->
                                 <button onclick="selectLogo('Canon', 'kamera/canon.svg')" class="logo-btn">
                                     <img src="kamera/canon.svg" alt="Canon">
                                 </button>
@@ -129,267 +121,322 @@
                                 <!-- Logo Leica -->
                                 <button onclick="selectLogo('Leica', 'kamera/Leica.svg')" class="logo-btn">
                                     <img src="kamera/Leica.svg" alt="Leica">
-
-                                 <!-- Logo Lumix -->
-                                <button onclick="selectLogo('Lumix', 'kamera/Lumix.svg')" class="logo-btn">
-                                    <img src="kamera/Lumix.svg" alt="L">
                                 </button>
 
-                                <!-- Logo olympus -->
+                                <!-- Logo Lumix -->
+                                <button onclick="selectLogo('Lumix', 'kamera/Lumix.svg')" class="logo-btn">
+                                    <img src="kamera/Lumix.svg" alt="Lumix">
+                                </button>
+
+                                <!-- Logo Olympus -->
                                 <button onclick="selectLogo('Olympus', 'kamera/Olympus.svg')" class="logo-btn">
                                     <img src="kamera/Olympus.svg" alt="Olympus">
                                 </button>
 
-                                <!-- Logo OmSytem -->
+                                <!-- Logo OM System -->
                                 <button onclick="selectLogo('OMSystem', 'kamera/OMSystem.svg')" class="logo-btn">
                                     <img src="kamera/OMSystem.svg" alt="OMSystem">
+                                </button>
 
-                                        <!-- Logo pentax -->
+                                <!-- Logo Pentax -->
                                 <button onclick="selectLogo('pentax', 'kamera/pentax.svg')" class="logo-btn">
                                     <img src="kamera/pentax.svg" alt="pentax">
+                                </button>
 
-                                        <!-- Logo ricoh -->
+                                <!-- Logo Ricoh -->
                                 <button onclick="selectLogo('Ricoh', 'kamera/Ricoh.svg')" class="logo-btn">
                                     <img src="kamera/Ricoh.svg" alt="Ricoh">
+                                </button>
 
-                                        <!-- Logo Hasselblade -->
+                                <!-- Logo Hasselblad -->
                                 <button onclick="selectLogo('Hasselblad', 'kamera/Hasselblad.svg')" class="logo-btn">
                                     <img src="kamera/Hasselblad.svg" alt="Hasselblad">
+                                </button>
 
-                                        <!-- Logo kodak -->
+                                <!-- Logo Kodak -->
                                 <button onclick="selectLogo('Kodak', 'kamera/Kodak.svg')" class="logo-btn">
                                     <img src="kamera/Kodak.svg" alt="Kodak">
+                                </button>
 
-                                        <!-- Logo yashica -->
+                                <!-- Logo Yashica -->
                                 <button onclick="selectLogo('yashica', 'kamera/yashica.svg')" class="logo-btn">
                                     <img src="kamera/yashica.svg" alt="yashica">
+                                </button>
 
-                                        <!-- Logo casio -->
+                                <!-- Logo Casio -->
                                 <button onclick="selectLogo('Casio', 'kamera/Casio.svg')" class="logo-btn">
                                     <img src="kamera/Casio.svg" alt="Casio">
+                                </button>
 
-                                        <!-- Logo practica -->
+                                <!-- Logo Praktica -->
                                 <button onclick="selectLogo('Practika', 'kamera/Practika.svg')" class="logo-btn">
                                     <img src="kamera/Praktica.svg" alt="Practika">
+                                </button>
 
-                                    <!-- Logo jenoptic-->
+                                <!-- Logo Jenoptik -->
                                 <button onclick="selectLogo('jenoptik', 'kamera/Jenoptik.svg')" class="logo-btn">
                                     <img src="kamera/Jenoptik.svg" alt="Jenoptik">
+                                </button>
 
-                                    <!-- Logo Agfa -->
+                                <!-- Logo Agfa -->
                                 <button onclick="selectLogo('Agfa', 'kamera/Agfa.svg')" class="logo-btn">
-                                    <img src="kamera/Agfa.svg" alt="Agfa">.
+                                    <img src="kamera/Agfa.svg" alt="Agfa">
+                                </button>
 
-                                    <!-- Logo benq -->
+                                <!-- Logo BenQ -->
                                 <button onclick="selectLogo('BenQ', 'kamera/BenQ.svg')" class="logo-btn">
                                     <img src="kamera/BenQ.svg" alt="BenQ">
+                                </button>
 
-                                      <!-- Logo sanyo -->
+                                <!-- Logo Sanyo -->
                                 <button onclick="selectLogo('Sanyo', 'kamera/Sanyo.svg')" class="logo-btn">
                                     <img src="kamera/Sanyo.svg" alt="Sanyo">
+                                </button>
 
-                                      <!-- Logo conika minolta -->
+                                <!-- Logo Konica Minolta -->
                                 <button onclick="selectLogo('Konica_Minolta', 'kamera/Konica_Minolta.svg')" class="logo-btn">
                                     <img src="kamera/Konica_Minolta.svg" alt="Konica_Minolta">
+                                </button>
 
-                                      <!-- Logo alpha -->
+                                <!-- Logo Alpha -->
                                 <button onclick="selectLogo('Alpha', 'kamera/Alpha.svg')" class="logo-btn">
                                     <img src="kamera/Alpha.svg" alt="Alpha">
+                                </button>
 
-                                      <!-- Logo sigma -->
+                                <!-- Logo Sigma -->
                                 <button onclick="selectLogo('Sigma', 'kamera/Sigma.svg')" class="logo-btn">
                                     <img src="kamera/Sigma.svg" alt="Sigma">
+                                </button>
 
-                                    <!-- Logo polaroid -->
+                                <!-- Logo Polaroid -->
                                 <button onclick="selectLogo('Polaroid', 'kamera/Polaroid.svg')" class="logo-btn">
                                     <img src="kamera/Polaroid.svg" alt="Polaroid">
+                                </button>
 
-                                    <!-- Logo carl Zeiss -->
+                                <!-- Logo Carl Zeiss -->
                                 <button onclick="selectLogo('Carl_Zeiss', 'kamera/Carl_Zeiss.svg')" class="logo-btn">
                                     <img src="kamera/Carl_Zeiss.svg" alt="Carl_Zeiss">
+                                </button>
 
-                                        <!-- Logo exilim -->
+                                <!-- Logo Exilim -->
                                 <button onclick="selectLogo('Exilim', 'kamera/Exilim.svg')" class="logo-btn">
                                     <img src="kamera/Exilim.svg" alt="Exilim">
+                                </button>
 
-
-                                    <!-- Logo brica -->
+                                <!-- Logo Brica -->
                                 <button onclick="selectLogo('Brica', 'kamera/Brica.svg')" class="logo-btn">
                                     <img src="kamera/Brica.svg" alt="Brica">
+                                </button>
 
-                                    <!-- Logo yi cam -->
+                                <!-- Logo Yi Cam -->
                                 <button onclick="selectLogo('Yi_Cam', 'kamera/Yi_Cam.svg')" class="logo-btn">
                                     <img src="kamera/Yi_Cam.svg" alt="Yi_Cam">
+                                </button>
 
-                                    <!-- Logo vivitar -->
+                                <!-- Logo Vivitar -->
                                 <button onclick="selectLogo('vivitar', 'kamera/vivitar.svg')" class="logo-btn">
                                     <img src="kamera/vivitar.svg" alt="vivitar">
+                                </button>
 
-                                    <!-- Logo HP -->
+                                <!-- Logo HP -->
                                 <button onclick="selectLogo('HP', 'kamera/HP.svg')" class="logo-btn">
                                     <img src="kamera/HP.svg" alt="HP">
+                                </button>
 
-                                    <!-- Logo mamiya -->
+                                <!-- Logo Mamiya -->
                                 <button onclick="selectLogo('Mamiya', 'kamera/Mamiya.svg')" class="logo-btn">
                                     <img src="kamera/Mamiya.svg" alt="Mamiya">
+                                </button>
 
-                                    <!-- Logo dji -->
+                                <!-- Logo DJI -->
                                 <button onclick="selectLogo('DJI', 'kamera/DJI.svg')" class="logo-btn">
                                     <img src="kamera/DJI.svg" alt="DJI">
+                                </button>
 
-                                    <!-- Logo gopro -->
+                                <!-- Logo GoPro -->
                                 <button onclick="selectLogo('GoPro', 'kamera/GoPro.svg')" class="logo-btn">
                                     <img src="kamera/GoPro.svg" alt="GoPro">
+                                </button>
 
-                                    <!-- Logo Insta360 -->
+                                <!-- Logo Insta360 -->
                                 <button onclick="selectLogo('Insta360', 'kamera/Insta360.svg')" class="logo-btn">
                                     <img src="kamera/Insta360.svg" alt="Insta360">
+                                </button>
 
-                                    <!-- Logo genius -->
+                                <!-- Logo Genius -->
                                 <button onclick="selectLogo('Genius', 'kamera/Genius.svg')" class="logo-btn">
                                     <img src="kamera/Genius.svg" alt="Genius">
+                                </button>
 
-                                    <!-- Logo JVC -->
+                                <!-- Logo JVC -->
                                 <button onclick="selectLogo('JVC', 'kamera/JVC.svg')" class="logo-btn">
                                     <img src="kamera/JVC.svg" alt="JVC">
+                                </button>
 
-                                    <!-- Logo xperia -->
+                                <!-- Logo Xperia -->
                                 <button onclick="selectLogo('Xperia', 'kamera/Xperia.svg')" class="logo-btn">
                                     <img src="kamera/Xperia.svg" alt="Xperia">
+                                </button>
 
-                                    <!-- Logo G -->
+                                <!-- Logo G -->
                                 <button onclick="selectLogo('G', 'kamera/G.svg')" class="logo-btn">
                                     <img src="kamera/G.svg" alt="G">
+                                </button>
 
-                                      <!-- Logo ttartisan -->
+                                <!-- Logo TTartisan -->
                                 <button onclick="selectLogo('TTartisan', 'kamera/TTartisan.svg')" class="logo-btn">
                                     <img src="kamera/TTartisan.svg" alt="TTartisan">
+                                </button>
 
-                                      <!-- Logo tamron -->
+                                <!-- Logo Tamron -->
                                 <button onclick="selectLogo('Tamron', 'kamera/Tamron.svg')" class="logo-btn">
                                     <img src="kamera/Tamron.svg" alt="Tamron">
+                                </button>
 
-                                      <!-- Logo viltrox -->
+                                <!-- Logo Viltrox -->
                                 <button onclick="selectLogo('Viltrox', 'kamera/Viltrox.svg')" class="logo-btn">
                                     <img src="kamera/Viltrox.svg" alt="Viltrox">
+                                </button>
 
-                                      <!-- Logo apple -->
+                                <!-- Logo Apple -->
                                 <button onclick="selectLogo('Apple', 'Hp/Apple.svg')" class="logo-btn">
                                     <img src="Hp/Apple.svg" alt="Apple">
+                                </button>
 
-                                    <!-- Logo xiaomi -->
+                                <!-- Logo Xiaomi -->
                                 <button onclick="selectLogo('Xiaomi', 'Hp/Xiaomi.svg')" class="logo-btn">
                                     <img src="Hp/Xiaomi.svg" alt="Xiaomi">
+                                </button>
 
-                                    <!-- Logo oppo -->
+                                <!-- Logo Oppo -->
                                 <button onclick="selectLogo('Oppo', 'Hp/Oppo.svg')" class="logo-btn">
                                     <img src="Hp/Oppo.svg" alt="Oppo">
+                                </button>
 
-                                    <!-- Logo Vivo -->
+                                <!-- Logo Vivo -->
                                 <button onclick="selectLogo('Vivo', 'Hp/Vivo.svg')" class="logo-btn">
                                     <img src="Hp/Vivo.svg" alt="Vivo">
+                                </button>
 
-                                    <!-- Logo huawei -->
+                                <!-- Logo Huawei -->
                                 <button onclick="selectLogo('Huawei', 'Hp/Huawei.svg')" class="logo-btn">
                                     <img src="Hp/Huawei.svg" alt="Huawei">
+                                </button>
 
-                                    <!-- Logo google -->
+                                <!-- Logo Google -->
                                 <button onclick="selectLogo('Google', 'Hp/Google.svg')" class="logo-btn">
                                     <img src="Hp/Google.svg" alt="Google">
+                                </button>
 
-                                    <!-- Logo Infinix -->
+                                <!-- Logo Infinix -->
                                 <button onclick="selectLogo('Infinix', 'Hp/Infinix.svg')" class="logo-btn">
                                     <img src="Hp/Infinix.svg" alt="Infinix">
+                                </button>
 
-                                    <!-- Logo honor -->
+                                <!-- Logo Honor -->
                                 <button onclick="selectLogo('Honor', 'Hp/Honor.svg')" class="logo-btn">
                                     <img src="Hp/Honor.svg" alt="Honor">
+                                </button>
 
-                                    <!-- Logo motorla -->
+                                <!-- Logo Motorola -->
                                 <button onclick="selectLogo('motorola', 'Hp/motorola.svg')" class="logo-btn">
                                     <img src="Hp/motorola.svg" alt="motorola">
+                                </button>
 
-                                    <!-- Logo realme -->
+                                <!-- Logo Realme -->
                                 <button onclick="selectLogo('Realme', 'Hp/Realme.svg')" class="logo-btn">
                                     <img src="Hp/Realme.svg" alt="Realme">
-                                   
-                                    <!-- Logo oneplus -->
+                                </button>
+
+                                <!-- Logo OnePlus -->
                                 <button onclick="selectLogo('OnePlus', 'Hp/OnePlus.svg')" class="logo-btn">
                                     <img src="Hp/OnePlus.svg" alt="OnePlus">
+                                </button>
 
-                                    <!-- Logo samsung -->
+                                <!-- Logo Samsung -->
                                 <button onclick="selectLogo('Samsung', 'Hp/Samsung.svg')" class="logo-btn">
                                     <img src="Hp/Samsung.svg" alt="Samsung">
+                                </button>
 
-                                    <!-- Logo nubia-->
+                                <!-- Logo Nubia -->
                                 <button onclick="selectLogo('Nubia', 'Hp/Nubia.svg')" class="logo-btn">
                                     <img src="Hp/Nubia.svg" alt="Nubia">
+                                </button>
 
-                                    <!-- Logo Nokia -->
+                                <!-- Logo Nokia -->
                                 <button onclick="selectLogo('Nokia', 'Hp/Nokia.svg')" class="logo-btn">
                                     <img src="Hp/Nokia.svg" alt="Nokia">
+                                </button>
 
-                                    <!-- Logo zte -->
+                                <!-- Logo ZTE -->
                                 <button onclick="selectLogo('ZTE', 'Hp/ZTE.svg')" class="logo-btn">
                                     <img src="Hp/ZTE.svg" alt="ZTE">
+                                </button>
 
-                                    <!-- Logo redmi -->
+                                <!-- Logo Redmi -->
                                 <button onclick="selectLogo('Redmi', 'Hp/Redmi.svg')" class="logo-btn">
                                     <img src="Hp/Redmi.svg" alt="Redmi">
-                                
-                                    <!-- Logo sony-ericson -->
+                                </button>
+
+                                <!-- Logo Sony Ericsson -->
                                 <button onclick="selectLogo('sony-ericsson', 'Hp/sony-ericsson.svg')" class="logo-btn">
                                     <img src="Hp/sony-ericsson.svg" alt="sony-ericsson">
+                                </button>
 
-                                    <!-- Logo zenfone -->
+                                <!-- Logo Zenfone -->
                                 <button onclick="selectLogo('Zenfone', 'Hp/Zenfone.svg')" class="logo-btn">
                                     <img src="Hp/Zenfone.svg" alt="Zenfone">
+                                </button>
 
-                                    <!-- Logo vertu -->
+                                <!-- Logo Vertu -->
                                 <button onclick="selectLogo('Vertu', 'Hp/Vertu.svg')" class="logo-btn">
                                     <img src="Hp/Vertu.svg" alt="Vertu">
+                                </button>
 
-                                    <!-- Logo Blackberry -->
+                                <!-- Logo BlackBerry -->
                                 <button onclick="selectLogo('blackberry', 'Hp/blackberry.svg')" class="logo-btn">
                                     <img src="Hp/blackberry.svg" alt="blackberry">
+                                </button>
 
-                                    <!-- Logo sharp -->
+                                <!-- Logo Sharp -->
                                 <button onclick="selectLogo('Sharp', 'Hp/Sharp.svg')" class="logo-btn">
                                     <img src="Hp/Sharp.svg" alt="Sharp">
+                                </button>
 
-                                    <!-- Logo Itel -->
+                                <!-- Logo Itel -->
                                 <button onclick="selectLogo('Itel', 'Hp/Itel.svg')" class="logo-btn">
                                     <img src="Hp/Itel.svg" alt="Itel">
+                                </button>
 
-                                    <!-- Logo Meizu-->
+                                <!-- Logo Meizu -->
                                 <button onclick="selectLogo('Meizu', 'Hp/Meizu.svg')" class="logo-btn">
                                     <img src="Hp/Meizu.svg" alt="Meizu">
+                                </button>
 
-                                    <!-- Logo htc -->
+                                <!-- Logo HTC -->
                                 <button onclick="selectLogo('htc', 'Hp/htc.svg')" class="logo-btn">
                                     <img src="Hp/htc.svg" alt="htc">
+                                </button>
 
-                                    <!-- Logo advan-->
+                                <!-- Logo Advan -->
                                 <button onclick="selectLogo('Advan', 'Hp/Advan.svg')" class="logo-btn">
                                     <img src="Hp/Advan.svg" alt="Advan">
+                                </button>
 
-                                    <!-- Logo iqoo -->
+                                <!-- Logo IQOO -->
                                 <button onclick="selectLogo('IQOO', 'Hp/IQOO.svg')" class="logo-btn">
                                     <img src="Hp/IQOO.svg" alt="IQOO">
+                                </button>
 
-                                    <!-- Logo Poco -->
+                                <!-- Logo POCO -->
                                 <button onclick="selectLogo('POCO', 'Hp/POCO.svg')" class="logo-btn">
                                     <img src="Hp/POCO.svg" alt="POCO">
-                                
-                                    <!-- Kosong -->
+                                </button>
+
+                                <!-- Kosong -->
                                 <button onclick="selectLogo('kosong', 'Hp/kosong.svg')" class="logo-btn">
                                     <img src="Hp/kosong.svg" alt="kosong">
-                                    
-
-
-
-
-
+                                </button>
                             </div>
 
                             <div class="custom-logo-wrapper">
@@ -426,57 +473,51 @@
                         <input type="text" id="input-author" value="Shot by Julam Carjer" oninput="updateCanvas()" class="custom-input text-center">
                     </div>
 
-                        <!-- Color Frame -->
-                        <div class="form-group full-width">
-                            <label class="control-label">Frame Color</label>
-                     
-                                <!-- Kotak-kotak Rekomendasi Warna -->
-                                <div class="color-presets" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
-                                <button type="button" onclick="setQuickColor('#FFFFFF')" class="preset-btn" style="background-color: #FFFFFF; border: 1px solid #ffffff; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Putih"></button>
-                                <button type="button" onclick="setQuickColor('#bdbdbd')" class="preset-btn" style="background-color: #bdbdbd; border: 1px solid #bdbdbd; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Abu-abu"></button>
-                                <button type="button" onclick="setQuickColor('#000000')" class="preset-btn" style="background-color: #000000; border: 1px solid #000000; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Hitam"></button>
+                    <!-- Color Frame -->
+                    <div class="form-group full-width">
+                        <label class="control-label">Frame Color</label>
+                        <div class="color-presets" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+                            <button type="button" onclick="setQuickColor('#FFFFFF')" class="preset-btn" style="background-color: #FFFFFF; border: 1px solid #ffffff; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Putih"></button>
+                            <button type="button" onclick="setQuickColor('#bdbdbd')" class="preset-btn" style="background-color: #bdbdbd; border: 1px solid #bdbdbd; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Abu-abu"></button>
+                            <button type="button" onclick="setQuickColor('#000000')" class="preset-btn" style="background-color: #000000; border: 1px solid #000000; width: 32px; height: 32px; border-radius: 2px; cursor: pointer;" title="Hitam"></button>
 
-
-                                <!-- Input Color Picker Kustom -->
-                                <div style="position: relative; display: inline-block;">
-                                    <input type="color" id="frame-color-picker" value="#ffffff" oninput="updateCanvas()" style="width: 102px; height: 52px; padding: 10; border: none; border-radius: 10px; cursor: pointer; background: none;">
-                                </div>
+                            <div style="position: relative; display: inline-block;">
+                                <input type="color" id="frame-color-picker" value="#ffffff" oninput="updateCanvas()" style="width: 102px; height: 52px; padding: 0; border: none; border-radius: 10px; cursor: pointer; background: none;">
                             </div>
-                        </div>
-
-                        <!-- Slider Tinggi Bottom Bar -->
-                        <div class="form-group">
-                            <div class="slider-label">
-                                <span>Bottom Bar Height</span>
-                                <span id="bar-height-val">60%</span>
-                            </div>
-                            <input type="range" id="bar-height-slider" min="30" max="100" value="60" oninput="updateCanvas()" class="custom-range">
-                        </div>
-
-                        <!-- Slider Ukuran Teks (Terpisah) -->
-                        <div class="form-group full-width">
-                            <div class="slider-label">
-                                <span>Text Size</span>
-                                <span id="text-size-val">100%</span>
-                            </div>
-                            <input type="range" id="text-size-slider" min="50" max="150" value="100" oninput="updateCanvas()" class="custom-range">
-                        </div>
-
-                        <!-- Slider Ukuran Logo (Terpisah) -->
-                        <div class="form-group full-width">
-                            <div class="slider-label">
-                                <span>Logo Size</span>
-                                <span id="logo-size-val">100%</span>
-                            </div>
-                            <input type="range" id="logo-size-slider" min="50" max="200" value="100" oninput="updateCanvas()" class="custom-range">
                         </div>
                     </div>
 
+                    <!-- Slider Tinggi Bottom Bar -->
+                    <div class="form-group">
+                        <div class="slider-label">
+                            <span>Bottom Bar Height</span>
+                            <span id="bar-height-val">60%</span>
+                        </div>
+                        <input type="range" id="bar-height-slider" min="30" max="100" value="60" oninput="updateCanvas()" class="custom-range">
+                    </div>
+
+                    <!-- Slider Ukuran Teks -->
+                    <div class="form-group full-width">
+                        <div class="slider-label">
+                            <span>Text Size</span>
+                            <span id="text-size-val">100%</span>
+                        </div>
+                        <input type="range" id="text-size-slider" min="50" max="150" value="100" oninput="updateCanvas()" class="custom-range">
+                    </div>
+
+                    <!-- Slider Ukuran Logo -->
+                    <div class="form-group full-width">
+                        <div class="slider-label">
+                            <span>Logo Size</span>
+                            <span id="logo-size-val">100%</span>
+                        </div>
+                        <input type="range" id="logo-size-slider" min="50" max="200" value="100" oninput="updateCanvas()" class="custom-range">
+                    </div>
 
                     <!-- Save Image Button -->
                     <button onclick="downloadImage()" class="btn-save" style="margin-top: 10px;">
-                    <i class="fa-solid fa-download"></i> Save The Picture
-                </button>
+                        <i class="fa-solid fa-download"></i> Save The Picture
+                    </button>
 
                 </div>
             </div>
