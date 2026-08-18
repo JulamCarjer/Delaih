@@ -61,13 +61,15 @@
                     </div>
 
                     <!-- Preset Style Selector -->
-                    <div class="full-width">
-                        <select id="quick-frame-select" onchange="changeFrameStyle(this.value)" class="custom-select">
-                            <option value="minimal-bottom">Frame Minimal White Bottom Bar</option>
-                            <option value="polaroid-classic">Frame Polaroid Classic</option>
-                            <option value="dark-modern">Frame Dark Modern</option>
-                
-                        </select>
+                    <div class="frame-select-wrapper">
+                        <!-- Label indikator nama frame (opsional) -->
+                        <div id="frame-title-display" class="frame-title-tag">Frame Minimal White Bottom Bar</div>
+                        <div class="full-width">
+                            <!-- Kotak Teks Penanda (Otomatis Diupdate oleh renderGenericFrame) -->
+                            <div id="quick-frame-display" class="frame-indicator-box">
+                                Frame Minimal White Bottom Bar
+                            </div>
+                        </div>
                     </div>
                 </div>
 
