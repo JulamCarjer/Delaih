@@ -121,6 +121,66 @@ const mockupTemplates = [{
         camera: 'YASHICA',
         author: 'Julam Carjer',
         date: '2026.08.09'
+    },
+    {
+        id: '10',
+        styleType: 'type-10',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
+    },
+    {
+        id: '11',
+        styleType: 'type-11',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
+    },
+    {
+        id: '12',
+        styleType: 'type-12',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
+    },
+    {
+        id: '13',
+        styleType: 'type-13',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
+    },
+    {
+        id: '14',
+        styleType: 'type-14',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
+    },
+    {
+        id: '15',
+        styleType: 'type-15',
+        photo: 'Foto/kucing.jpg',
+        logo: 'kamera/yashica.svg',
+        exif: 'f/4 | 1/125s | ISO400 | 23.5mm',
+        camera: 'YASHICA',
+        author: 'Julam Carjer',
+        date: '2026.08.09'
     }
 ];
 
@@ -480,6 +540,12 @@ function updateCanvas() {
     );
 }
 
+
+
+
+
+
+
 // ============================================================================================================================================================================================================================================================
 // 12. FUNGSI GENERIK RENDER FRAME (UTAMA & PREVIEW)
 // ============================================================================================================================================================================================================================================================
@@ -506,13 +572,14 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
     let borderRatio = 0.05;
     let barRatio = 0.20;
 
-    if (['type-6', 't6', 'polaroid-thick', 'type6'].includes(activeStyle)) {
+    if (['type-7', 't7', 'polaroid-thick', 'type7'].includes(activeStyle)) {
         borderRatio = 0.08;
         barRatio = 0.25;
     } else if (['type-4', 't4', 'no-frame', 'type4'].includes(activeStyle)) {
         borderRatio = 0;
         barRatio = 0;
     }
+
 
     const borderSide = Math.round(img.width * borderRatio);
     const borderBottom = Math.round(img.height * barRatio * barFactor);
@@ -537,9 +604,15 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
 
 
 
-    // =========================================================================
+
+
+    //###################################################################################################################################################
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
     // LAYOUT 1: LOGO KIRI, EXIF KANAN
-    // =========================================================================
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
     if (['type-1', 't1', 'classic-left', 'type1'].includes(activeStyle)) {
         canvas.width = img.width + (borderSide * 2);
         canvas.height = img.height + borderSide + borderBottom;
@@ -552,112 +625,166 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         const xLeft = borderSide + 15;
         const xRight = canvas.width - borderSide - 15;
 
-
+        // 1. OLAH DATA TEKS
         const pureExifText = [
             focalInput ? focalInput.value : '',
             apertureInput ? apertureInput.value : '',
             shutterInput ? shutterInput.value : '',
             isoInput ? isoInput.value : ''
-        ].filter(Boolean).join('  |  ');
+        ].filter(Boolean).join('    |    ');
 
-        // 2. Teks Baris Bawah: Shot By & Tanggal Dipisah
-        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : ''; // Cegah kata "Shot by" ganda
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
         const subTextParts = [];
-
         if (authorClean) subTextParts.push(`Shot by ${authorClean}`);
         if (dateStr) subTextParts.push(dateStr);
+        const subDetailsText = subTextParts.join('   •   ');
 
-        const subDetailsText = subTextParts.join('   •   '); // Pembatas antara Author dan Tanggal
-
-        // --- CONTOH PENATAN PADA CANVAS (Rata Kanan) ---
-        ctx.textAlign = "right";
-
-        // BARIS 1: EXIF (Agak ke atas dari titik tengah)
-        ctx.textBaseline = "bottom";
-        ctx.fillStyle = textColor;
-        ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(pureExifText, xRight, yCenter - 30);
-
-        // BARIS 2: Shot By & Tanggal (Agak ke bawah dari titik tengah)
-        const smallFontSize = Math.round(baseFontSize * 0.85);
-        ctx.textBaseline = "top";
-        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#424242'; // Warna lebih soft
-        ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(subDetailsText, xRight, yCenter + 40);
-
-        // Logo Kiri
+        // 2. RENDER LOGO (KIRI)
         if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
             const logoH = Math.round(borderBottom * 0.35 * logoScale);
             const logoW = Math.round(logoH * logoAspect);
-            ctx.drawImage(logoImg, xLeft, yCenter - (logoH / 2), logoW, logoH);
-
-            const typeFontSize = Math.round(baseDimension * 0.05 * textScale);
-            ctx.fillStyle = textColor;
-            ctx.font = `500 ${typeFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-            ctx.textBaseline = "top";
-            ctx.fillText(cameraStr || 'EZ W-501L', panelXCenter, logoY + logoHeight + 1);
-
+            const logoY = yCenter - (logoH / 2);
+            ctx.drawImage(logoImg, xLeft, logoY, logoW, logoH);
         }
 
+        // 3. RENDER 3 BARIS TEKS (KANAN)
+        ctx.save();
+        ctx.textAlign = "right";
 
+        // Ukuran Font
+        const fontSizeMain = Math.round(baseFontSize * 0.85); // Font Kamera & EXIF
+        const fontSizeSub = Math.round(fontSizeMain * 0.8); // Font Shot By
+        const lineSpacing = Math.round(fontSizeMain * 1.50); // Jarak antarbaris
+
+        // BARIS 1 (ATAS): Data EXIF
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = textColor;
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xRight, yCenter - lineSpacing);
+
+        // BARIS 2 (TENGAH): Nama Kamera (Diapit)
+        if (cameraDisplay) {
+            ctx.font = `600 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xRight, yCenter);
+        }
+
+        // BARIS 3 (BAWAH): Shot By & Tanggal
+        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#555555';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(subDetailsText, xRight, yCenter + lineSpacing);
+
+        ctx.restore();
     }
 
-    // =========================================================================
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
     // LAYOUT 2: LOGO TENGAH, EXIF TENGAH
-    // =========================================================================
-    else if (['type-2', 't2', 'centered', 'type2'].includes(activeStyle)) {
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-2', 't2', 'classic-center', 'type2'].includes(activeStyle)) {
         canvas.width = img.width + (borderSide * 2);
         canvas.height = img.height + borderSide + borderBottom;
 
-        ctx.fillStyle = bgColor;
+        ctx.fillStyle = bgColor || '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, borderSide, borderSide, img.width, img.height);
 
         const yCenter = canvas.height - (borderBottom / 2);
         const xCenter = canvas.width / 2;
 
-        // A. Olah Teks Agar Tidak Dobel
-        const pureExifText = exifString || '';
+        // 1. OLAH TEKS EXIF & DETAIL
+        const pureExifText = [
+            focalInput ? focalInput.value : '',
+            apertureInput ? apertureInput.value : '',
+            shutterInput ? shutterInput.value : '',
+            isoInput ? isoInput.value : ''
+        ].filter(Boolean).join('    |    ');
+
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
         const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subTextParts = [];
+        if (authorClean) subTextParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subTextParts.push(dateStr);
+        const subDetailsText = subTextParts.join('   •   ');
 
-        const subParts = [];
-        if (authorClean) subParts.push(`Shot by ${authorClean}`);
-        if (dateStr) subParts.push(dateStr);
-        const subDetailsText = subParts.join('   •   '); // Pembatas titik tengah
+        // 2. KEAMANAN VARIABLE FONT (Mencegah NaN)
+        const baseDimension = Math.min(img.width, img.height);
+        const calculatedBaseFont = Math.round(baseDimension * 0.035);
+        const safeBaseFontSize = (typeof baseFontSize !== 'undefined' && !isNaN(baseFontSize)) ? baseFontSize : calculatedBaseFont;
 
-        // Logo 
-        const logoH = Math.round(borderBottom * 0.28 * logoScale);
-        const logoW = Math.round(logoH * logoAspect);
+        // 3. KEAMANAN VARIABLE LOGO
+        let logoH = 0;
+        let logoW = 0;
+        const safeLogoScale = typeof logoScale !== 'undefined' ? logoScale : 1;
+        const safeLogoAspect = (logoImg && logoImg.naturalWidth) ? (logoImg.naturalWidth / logoImg.naturalHeight) : 1;
+        const hasLogo = logoImg && logoImg.complete && logoImg.naturalWidth !== 0;
 
-        if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
-            // Logo digeser agak ke atas
-            ctx.drawImage(logoImg, xCenter - (logoW / 2), yCenter - logoH - 10, logoW, logoH);
+        if (hasLogo) {
+            logoH = Math.round(borderBottom * 0.35 * safeLogoScale);
+            logoW = Math.round(logoH * safeLogoAspect);
         }
 
+        // 4. HITUNG KOORDINAT Y LOGO & TEKS
+        const logoY = hasLogo ? (canvas.height - borderBottom + 130) : yCenter;
+
+        if (hasLogo) {
+            const logoX = xCenter - (logoW / 2);
+            ctx.drawImage(logoImg, logoX, logoY, logoW, logoH);
+        }
+
+        const lineGap = 18;
+
+        // 5. RENDER TEKS BERURUTAN DI BAWAH LOGO
+        ctx.save();
         ctx.textAlign = "center";
-
-        // C. BARIS 1: EXIF (Di Tengah)
         ctx.textBaseline = "top";
-        ctx.fillStyle = textColor;
-        ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(pureExifText, xCenter, yCenter + 50);
 
-        // D. BARIS 2: Shot By & Tanggal (Di Bawah EXIF)
-        const smallFontSize = Math.round(baseFontSize * 0.85);
-        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#424242'; // Warna sedikit lebih soft
-        ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(subDetailsText, xCenter, yCenter + baseFontSize + 80);
+        // Titik awal Y untuk baris pertama di bawah logo
+        let currentY = hasLogo ? (logoY + logoH + 100) : (yCenter - 130);
+
+        // BARIS 1: EXIF
+        const fontSizeExif = Math.round(safeBaseFontSize * 0.85);
+        ctx.fillStyle = textColor || '#000000';
+        ctx.font = `500 ${fontSizeExif}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xCenter, currentY);
+
+        // Tambahkan tinggi font + Spasi Vertikal (lineGap)
+        currentY += fontSizeExif + lineGap;
+
+        // BARIS 2: Nama Kamera
+        if (cameraDisplay) {
+            const fontSizeCam = Math.round(safeBaseFontSize * 0.9);
+            ctx.font = `700 ${fontSizeCam}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xCenter, currentY);
+
+            // Tambahkan tinggi font kamera + Spasi Vertikal (lineGap)
+            currentY += fontSizeCam + lineGap;
+        }
+
+        // BARIS 3: Shot By & Tanggal
+        const fontSizeSub = Math.round(fontSizeExif * 0.8);
+        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#555555';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(subDetailsText, xCenter, currentY);
+
+        ctx.restore();
     }
 
 
-    // =========================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
     // LAYOUT 3: LOGO KANAN, EXIF KIRI
-    // =========================================================================
-    else if (['type-3', 't3', 'classic-right', 'type3'].includes(activeStyle)) {
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-3', 't3', 'classic-left', 'type3'].includes(activeStyle)) {
         canvas.width = img.width + (borderSide * 2);
         canvas.height = img.height + borderSide + borderBottom;
 
-        ctx.fillStyle = bgColor;
+        ctx.fillStyle = bgColor || '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, borderSide, borderSide, img.width, img.height);
 
@@ -665,47 +792,69 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         const xLeft = borderSide + 15;
         const xRight = canvas.width - borderSide - 15;
 
+        // 1. OLAH DATA TEKS
         const pureExifText = [
             focalInput ? focalInput.value : '',
             apertureInput ? apertureInput.value : '',
             shutterInput ? shutterInput.value : '',
             isoInput ? isoInput.value : ''
-        ].filter(Boolean).join('   |   ');
+        ].filter(Boolean).join('    |    ');
 
-        // Baris 2: Shot By dan Tanggal Dipisah Pembatas
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
         const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
-        const subParts = [];
-        if (authorClean) subParts.push(`Shot by ${authorClean}`);
-        if (dateStr) subParts.push(dateStr);
-        const subDetailsText = subParts.join('   •   ');
+        const subTextParts = [];
+        if (authorClean) subTextParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subTextParts.push(dateStr);
+        const subDetailsText = subTextParts.join('   •   ');
 
-        // 2. GAMBAR TEKS KIRI (2 BARIS VERTIKAL)
-        ctx.textAlign = "left";
-
-        // BARIS 1: EXIF (Di atas garis tengah)
-        ctx.textBaseline = "bottom";
-        ctx.fillStyle = textColor;
-        ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(pureExifText, xLeft, yCenter - 20);
-
-        // BARIS 2: Shot By & Tanggal (Di bawah garis tengah)
-        const smallFontSize = Math.round(baseFontSize * 0.85);
-        ctx.textBaseline = "top";
-        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#424242';
-        ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(subDetailsText, xLeft, yCenter + 50);
-
-        // 3. GAMBAR LOGO KANAN (Pas di tengah vertikal)
+        // 2. RENDER LOGO (POSISI KANAN)
         if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
             const logoH = Math.round(borderBottom * 0.35 * logoScale);
             const logoW = Math.round(logoH * logoAspect);
-            ctx.drawImage(logoImg, xRight - logoW, yCenter - (logoH / 2), logoW, logoH);
+            const logoY = yCenter - (logoH / 2);
+
+            // xRight dikurangi logoW agar logo bersandar di margin kanan
+            ctx.drawImage(logoImg, xRight - logoW, logoY, logoW, logoH);
         }
+
+        // 3. RENDER 3 BARIS TEKS (POSISI KIRI / RATA KIRI)
+        ctx.save();
+        ctx.textAlign = "left"; // Set alignment ke Kiri
+
+        const fontSizeMain = Math.round(baseFontSize * 0.85); // Font Kamera & EXIF
+        const fontSizeSub = Math.round(fontSizeMain * 0.8); // Font Shot By
+        const lineSpacing = Math.round(fontSizeMain * 1.3); // Spasi vertikal antarbaris
+
+        // BARIS 1 (ATAS): Data EXIF
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = textColor || '#000000';
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xLeft, yCenter - lineSpacing);
+
+        // BARIS 2 (TENGAH): Nama Kamera (Diapit di Tengah)
+        if (cameraDisplay) {
+            ctx.font = `700 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xLeft, yCenter);
+        }
+
+        // BARIS 3 (BAWAH): Shot By & Tanggal
+        ctx.fillStyle = textColor === '#ffffff' ? '#cccccc' : '#555555';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(subDetailsText, xLeft, yCenter + lineSpacing);
+
+        ctx.restore();
     }
 
-    // =========================================================================
-    // LAYOUT 4: TANPA FRAME (Direct Watermark ke Atas Foto)
-    // =========================================================================
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 4: NON FRAME KIRI
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // NONE FRAME
+    // NONE FRAME / TYPE-4 (Logo/Kamera di Sisi Sebaliknya)
     else if (['type-4', 't4', 'no-frame', 'type4'].includes(activeStyle)) {
         canvas.width = img.width;
         canvas.height = img.height;
@@ -714,7 +863,234 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
 
         const padding = Math.round(baseDimension * 0.04);
         const xLeft = padding;
+        const xRight = canvas.width - padding; // Batas Kanan
         const yBottom = canvas.height - padding;
+
+        // 1. OLAH DATA TEKS
+        const pureExifText = [
+            focalInput ? focalInput.value : '',
+            apertureInput ? apertureInput.value : '',
+            shutterInput ? shutterInput.value : '',
+            isoInput ? isoInput.value : ''
+        ].filter(Boolean).join('     |     ');
+
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subParts = [];
+        if (authorClean) subParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subParts.push(dateStr);
+        const line2Details = subParts.join('   •   ');
+
+        // 2. UKURAN FONT & POSISI Y
+        const fontSizeMain = Math.round(baseFontSize * 0.85);
+        const fontSizeSub = Math.round(fontSizeMain * 0.8);
+        const lineGap = Math.round(fontSizeMain * 0.5);
+
+        const yLine2 = yBottom; // Baris Bawah (Shot By)
+        const yLine1 = yLine2 - fontSizeSub - lineGap; // Baris Atas (EXIF)
+        const yMiddle = yLine1 + ((yLine2 - yLine1) / 2); // Titik Tengah Vertikal
+
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+        ctx.shadowBlur = 10;
+
+        // --- SISI KIRI: EXIF & SHOT BY ---
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+
+        // EXIF (Kiri Atas)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xLeft, yLine1);
+
+        // Shot By (Kiri Bawah)
+        ctx.fillStyle = '#dddddd';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line2Details, xLeft, yLine2);
+
+
+        // --- SISI SEBALIKNYA (KANAN): NAMA KAMERA ---
+        if (cameraDisplay) {
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle"; // Posisi presisi di tengah-tengah antara Baris 1 & 2
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `700 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xRight, yMiddle);
+        }
+
+        ctx.restore();
+    }
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 5: NON FRAME TENGAH
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-5', 't5', 'no-frame', 'type5'].includes(activeStyle)) {
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+
+        const padding = Math.round(baseDimension * 0.04);
+        const xCenter = canvas.width / 2; // Titik tengah Horizontal Canvas
+        const yBottom = canvas.height - padding;
+
+        // 1. OLAH DATA TEKS
+        const pureExifText = [
+            focalInput ? focalInput.value : '',
+            apertureInput ? apertureInput.value : '',
+            shutterInput ? shutterInput.value : '',
+            isoInput ? isoInput.value : ''
+        ].filter(Boolean).join('     |     ');
+
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subParts = [];
+        if (authorClean) subParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subParts.push(dateStr);
+        const line2Details = subParts.join('   •   ');
+
+        // 2. TENTUKAN SPASI & UKURAN FONT
+        const fontSizeMain = Math.round(baseFontSize * 0.85);
+        const fontSizeSub = Math.round(fontSizeMain * 0.8);
+        const lineGap = Math.round(fontSizeMain * 0.5);
+
+        // Hitung Posisi Y dari bawah ke atas
+        const yLine3 = yBottom; // Baris 3: Shot By
+        const yLine2 = yLine3 - fontSizeSub - lineGap; // Baris 2: Nama Kamera
+        const yLine1 = yLine2 - fontSizeMain - lineGap; // Baris 1: EXIF
+
+        ctx.save();
+        // Shadow agar teks putih tetap terbaca jelas di atas foto (latar terang/gelap)
+        ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+        ctx.shadowBlur = 10;
+        ctx.textAlign = "center"; // Rata Tengah Horizontal
+        ctx.textBaseline = "bottom";
+
+        // BARIS 1 (ATAS): Data EXIF
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xCenter, yLine1);
+
+        // BARIS 2 (TENGAH): Nama Kamera (Diapit)
+        if (cameraDisplay) {
+            ctx.font = `700 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xCenter, yLine2);
+        }
+
+        // BARIS 3 (BAWAH): Shot By & Tanggal
+        ctx.fillStyle = '#dddddd';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line2Details, xCenter, yLine3);
+
+        ctx.restore();
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 6: NON FRAME KANAN
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-6', 't6', 'no-frame', 'type6'].includes(activeStyle)) {
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+
+        const padding = Math.round(baseDimension * 0.04);
+        const xLeft = padding;
+        const xRight = canvas.width - padding;
+        const yBottom = canvas.height - padding;
+
+        // 1. OLAH DATA TEKS
+        const pureExifText = [
+            focalInput ? focalInput.value : '',
+            apertureInput ? apertureInput.value : '',
+            shutterInput ? shutterInput.value : '',
+            isoInput ? isoInput.value : ''
+        ].filter(Boolean).join('     |     ');
+
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subParts = [];
+        if (authorClean) subParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subParts.push(dateStr);
+        const line2Details = subParts.join('   •   ');
+
+        // 2. TENTUKAN SPASI & UKURAN FONT
+        const fontSizeMain = Math.round(baseFontSize * 0.85);
+        const fontSizeSub = Math.round(fontSizeMain * 0.8);
+        const lineGap = Math.round(fontSizeMain * 0.5);
+
+        const yLine2 = yBottom; // Baris Bawah (Shot By)
+        const yLine1 = yLine2 - fontSizeSub - lineGap; // Baris Atas (EXIF)
+        const yMiddle = yLine1 + ((yLine2 - yLine1) / 2); // Titik Tengah Vertikal
+
+        ctx.save();
+        // Bayangan agar teks/logo kontras di atas foto
+        ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+        ctx.shadowBlur = 10;
+
+        // --- SISI KIRI: NAMA KAMERA / LOGO ---
+        if (cameraDisplay) {
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle"; // Ditaruh presisi di tengah-tengah tinggi baris kanan
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `700 ${Math.round(fontSizeMain * 1.1)}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xLeft, yMiddle);
+        }
+
+        // --- SISI KANAN: EXIF & SHOT BY ---
+        ctx.textAlign = "right";
+
+        // BARIS 1: EXIF (Kanan Atas)
+        ctx.textBaseline = "bottom";
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(pureExifText, xRight, yLine1);
+
+        // BARIS 2: Shot By & Tanggal (Kanan Bawah)
+        ctx.textBaseline = "bottom";
+        ctx.fillStyle = '#dddddd';
+        ctx.font = `400 ${fontSizeSub}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line2Details, xRight, yLine2);
+
+        ctx.restore();
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 7: FRAME BLUR TEXT KIRI
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-7', 't7', 'frame-blur', 'type7'].includes(activeStyle)) {
+        const sideBlur = Math.round(baseDimension * 0.06);
+        const bottomBlur = Math.round(baseDimension * 0.15 * (typeof barFactor !== 'undefined' ? barFactor : 1));
+
+        canvas.width = img.width + (sideBlur * 2);
+        canvas.height = img.height + sideBlur + bottomBlur;
+
+        // Background Blur Foto
+        ctx.save();
+        ctx.filter = 'blur(25px) brightness(0.7)';
+        ctx.drawImage(img, -20, -20, canvas.width + 40, canvas.height + 40);
+        ctx.restore();
+
+        // Foto Utama
+        ctx.drawImage(img, sideBlur, sideBlur, img.width, img.height);
+
+        const yCenter = canvas.height - (bottomBlur / 2);
+        // Koordinat X untuk batas kiri (Side Blur + Padding)
+        const xLeft = sideBlur + 15;
 
         // Olah Teks
         const cameraText = cameraStr ? `${cameraStr.toUpperCase()}  |  ` : '';
@@ -726,30 +1102,43 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         if (dateStr) subParts.push(dateStr);
         const line2Details = subParts.join('   •   ');
 
+
+        // Ukuran Font Proporsional (Sama persis dengan versi kanan)
+        const fontSizeLine1 = Math.max(14, Math.round(bottomBlur * 0.22));
+        const fontSizeLine2 = Math.max(11, Math.round(fontSizeLine1 * 0.75));
+
         ctx.save();
         ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
         ctx.shadowBlur = 8;
+
+        // Set Alignment ke LEFT
         ctx.textAlign = "left";
 
-        // BARIS 1: Nama Kamera + EXIF (Di atas)
+        // BARIS 1: EXIF (Teks Utama di Kiri)
         ctx.textBaseline = "bottom";
         ctx.fillStyle = '#ffffff';
-        ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(line1Exif, xLeft, yBottom - smallFontSize - 6);
+        ctx.font = `600 ${fontSizeLine1}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line1Exif, xLeft, yCenter - 2);
 
-        // BARIS 2: Shot By & Tanggal (Di bawah)
-        ctx.textBaseline = "bottom";
-        ctx.fillStyle = '#dddddd';
-        ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(line2Details, xLeft, yBottom - smallFontSize + 90);
+        // BARIS 2: Shot By & Tanggal (Sub-teks di Kiri)
+        ctx.textBaseline = "top";
+        ctx.fillStyle = '#cccccc';
+        ctx.font = `400 ${fontSizeLine2}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line2Details, xLeft, yCenter + 4);
+
 
         ctx.restore();
     }
 
-    // =========================================================================
-    // LAYOUT 5: FRAME BLUR BACKGROUND
-    // =========================================================================
-    else if (['type-5', 't5', 'blur-frame', 'type5'].includes(activeStyle)) {
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 8: FRAME BLUR TEXT TENGAH
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-8', 't8', 'frame-blur', 'type8'].includes(activeStyle)) {
         const sideBlur = Math.round(baseDimension * 0.06);
         const bottomBlur = Math.round(baseDimension * 0.15 * barFactor);
 
@@ -769,7 +1158,6 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         const xLeft = sideBlur + 15;
         const xRight = canvas.width - sideBlur - 15;
 
-        // Olah Teks
         const cameraText = cameraStr ? `${cameraStr.toUpperCase()}  |  ` : '';
         const line1Exif = `${cameraText}${exifString || ''}`;
 
@@ -779,32 +1167,96 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         if (dateStr) subParts.push(dateStr);
         const line2Details = subParts.join('   •   ');
 
-        ctx.textAlign = "left";
+        // Penentuan koordinat & padding
+        const padding = Math.round(baseDimension * 0.04);
+        const xCenter = canvas.width / 2;
 
-        // BARIS 1: Nama Kamera + EXIF
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+        ctx.shadowBlur = 8;
+        ctx.textAlign = "center";
+
+        // BARIS 1: EXIF (Tengah)
         ctx.textBaseline = "bottom";
         ctx.fillStyle = '#ffffff';
         ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(line1Exif, xLeft, yCenter + 2);
+        ctx.fillText(line1Exif, xCenter, yCenter + 2);
+
+        // BARIS 2: Shot By & Tanggal (Tengah)
+        ctx.textBaseline = "top";
+        ctx.fillStyle = '#cccccc';
+        ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line2Details, xCenter, yCenter + 25);
+
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 9: FRAME BLUR TEXT KANAN
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-9', 't9', 'frame-blur', 'type9'].includes(activeStyle)) {
+        const sideBlur = Math.round(baseDimension * 0.06);
+        const bottomBlur = Math.round(baseDimension * 0.15 * barFactor);
+
+        canvas.width = img.width + (sideBlur * 2);
+        canvas.height = img.height + sideBlur + bottomBlur;
+
+        // Background Blur Foto
+        ctx.save();
+        ctx.filter = 'blur(25px) brightness(0.7)';
+        ctx.drawImage(img, -20, -20, canvas.width + 40, canvas.height + 40);
+        ctx.restore();
+
+        // Foto Utama
+        ctx.drawImage(img, sideBlur, sideBlur, img.width, img.height);
+
+        const yCenter = canvas.height - (bottomBlur / 2);
+        const xLeft = sideBlur + 15;
+        const xRight = canvas.width - sideBlur - 15;
+
+        const cameraText = cameraStr ? `${cameraStr.toUpperCase()}  |  ` : '';
+        const line1Exif = `${cameraText}${exifString || ''}`;
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subParts = [];
+        if (authorClean) subParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subParts.push(dateStr);
+        const line2Details = subParts.join('   •   ');
+
+        // Penentuan koordinat & padding
+        const padding = Math.round(baseDimension * 0.04);
+        const xCenter = canvas.width / 2;
+
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+        ctx.shadowBlur = 8;
+        ctx.textAlign = "right";
+
+        // BARIS 1: EXIF
+        ctx.textBaseline = "bottom";
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `500 ${baseFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText(line1Exif, xRight, yCenter + 2);
 
         // BARIS 2: Shot By & Tanggal
         ctx.textBaseline = "top";
         ctx.fillStyle = '#cccccc';
         ctx.font = `400 ${smallFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.fillText(line2Details, xLeft, yCenter + 30);
-
-        // Logo Kanan (Jika ada logo terpasang)
-        if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
-            const logoH = Math.round(bottomBlur * 0.35 * logoScale);
-            const logoW = Math.round(logoH * logoAspect);
-            ctx.drawImage(logoImg, xRight - logoW, yCenter - (logoH / 2), logoW, logoH);
-        }
+        ctx.fillText(line2Details, xRight, yCenter + 25);
     }
 
-    // =========================================================================
-    // LAYOUT 6: FRAME TEBAL POLAROID
-    // =========================================================================
-    else if (['type-6', 't6', 'polaroid-clean', 'type6'].includes(activeStyle)) {
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 10: FRAME TEBAL POLAROID
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-10', 't10', 'polaroid-thick', 'type10'].includes(activeStyle)) {
         const sideThick = Math.round(baseDimension * 0.08);
         const topThick = Math.round(baseDimension * 0.08);
         const bottomThick = Math.round(baseDimension * 0.22 * barFactor);
@@ -841,107 +1293,60 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
 
 
 
-    // =========================================================================
-    // LAYOUT 7: SIDE PANEL VERTICAL EXIF (PRESISI SESUAI REFERENSI)
-    // =========================================================================
-    else if (['type-7', 't7', 'side-panel-v2', 'type7'].includes(activeStyle)) {
-        // A. HITUNG RASIO DINAMIS SESUAI UKURAN FOTO
-        // Lebar panel kanan otomatis 45% dari lebar foto asli
-        const rightPanelWidth = Math.round(img.width * 0.45);
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 11: FRAME TEBAL KECIL
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-11', 't11', 'polaroid-3d', 'type11'].includes(activeStyle)) {
+        // 1. ATUR KETEBALAN FRAME (Frame tebal agar foto terlihat lebih kecil)
+        const borderSide = Math.round(baseDimension * 0.5); // Ketebalan frame kiri & kanan (15%)
+        const borderBottom = Math.round(baseDimension * 0.5); // Ketebalan frame bawah (20%)
 
-        // Total canvas menyesuaikan tinggi foto murni & menambahkan panel kanan
-        canvas.width = img.width + rightPanelWidth;
-        canvas.height = img.height;
+        canvas.width = img.width + (borderSide * 2);
+        canvas.height = img.height + borderSide + borderBottom;
 
-        const baseDim = Math.min(canvas.width, canvas.height);
+        const yCenter = canvas.height - (borderBottom / 2);
+        const xCenter = canvas.width / 2;
 
-        // B. DRAW BACKGROUND PANEL KANAN & FOTO UTAMA
+        // 2. BACKGROUND POLOS (SOLID COLOR)
         ctx.fillStyle = bgColor || '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Foto ditempatkan di sisi kiri murni tanpa margin (0,0)
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        // 3. GAMBAR FOTO UTAMA DI TENGAH
+        ctx.drawImage(img, borderSide, borderSide, img.width, img.height);
 
-        // Titik tengah horizontal untuk teks di panel kanan
-        const panelXCenter = img.width + (rightPanelWidth / 2);
-        ctx.textAlign = "center";
+        // 4. OLAH DATA TEKS (HANYA SHOT BY & TANGGAL)
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const subParts = [];
+        if (authorClean) subParts.push(`Shot by ${authorClean}`);
+        if (dateStr) subParts.push(dateStr);
+        const lineShotBy = subParts.join('   •   ');
 
-        // ---------------------------------------------------------------------
-        // 1. BLOK ATAS: LOGO KAMERA & TIPE KAMERA
-        // ---------------------------------------------------------------------
-        const logoY = Math.round(img.height * 0.08); // 8% dari atas
-        const logoHeight = Math.round(img.height * 0.04 * (logoScale || 1));
+        // 5. RENDER TEKS TUNGGAL DI TENGAH
+        if (lineShotBy) {
+            ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
 
-        if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
-            const logoW = Math.round(logoHeight * (logoAspect || 1.8));
-            ctx.drawImage(logoImg, panelXCenter - (logoW / 2), logoY, logoW, logoHeight);
+            const fontSizeShotBy = Math.round(baseFontSize * 0.85);
+            ctx.fillStyle = textColor || '#333333';
+            ctx.font = `400 ${fontSizeShotBy}px -apple-system, BlinkMacSystemFont, sans-serif`;
+
+            ctx.fillText(lineShotBy, xCenter, yCenter);
+
+            ctx.restore();
         }
-
-        // Nama Tipe Kamera (di bawah logo)
-        const typeFontSize = Math.round(baseDim * 0.025 * (textScale || 1));
-        ctx.fillStyle = textColor || '#000000';
-        ctx.font = `500 ${typeFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        ctx.textBaseline = "top";
-        ctx.fillText(cameraStr || 'EZ W-501L', panelXCenter, logoY + logoHeight + Math.round(img.height * 0.015));
-
-        // ---------------------------------------------------------------------
-        // 2. BLOK TENGAH: DATA EXIF BERSUSUN VERTIKAL
-        // ---------------------------------------------------------------------
-        // Memecah string EXIF (f/4 | 1/125s | ISO400 | 2.5mm) menjadi array baris
-        const pureExifText = exifString || '';
-        let exifLines = [];
-        if (pureExifText && pureExifText.trim() !== '') {
-            exifLines = pureExifText.split('|').map(s => s.trim()).filter(Boolean);
-        }
-
-        // Fallback jika input EXIF kosong
-        if (exifLines.length === 0) {
-            exifLines = ['f/4', '1/125s', 'ISO400', '2.5mm'];
-        }
-
-        const exifFontSize = Math.round(baseDim * 0.026 * (textScale || 1));
-        const lineHeight = Math.round(exifFontSize * 1.6);
-        ctx.font = `400 ${exifFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        ctx.fillStyle = textColor || '#000000';
-        ctx.textBaseline = "middle";
-
-        // Posisi Y Tengah
-        const centerY = canvas.height / 2;
-        const totalExifHeight = (exifLines.length - 1) * lineHeight;
-        let startExifY = centerY - (totalExifHeight / 2);
-
-        exifLines.forEach((line) => {
-            ctx.fillText(line, panelXCenter, startExifY);
-            startExifY += lineHeight;
-        });
-
-        // ---------------------------------------------------------------------
-        // 3. BLOK BAHAW: TANGGAL & SHOT BY
-        // ---------------------------------------------------------------------
-        const footerFontSize = Math.round(baseDim * 0.024 * (textScale || 1));
-        const bottomMargin = Math.round(img.height * 0.06); // 6% dari bawah
-        ctx.font = `400 ${footerFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        ctx.fillStyle = textColor || '#3d3d3d';
-        ctx.textBaseline = "bottom";
-
-        // Baris Paling Bawah: Shot By
-        const authorClean = authorStr ? authorStr.replace(/^Shot by\s*/i, '') : 'Julam Carjer';
-        const lineShotBy = `Shot By.${authorClean}`;
-        ctx.fillText(lineShotBy, panelXCenter, canvas.height - bottomMargin);
-        ctx.fillStyle = textColor || '#2e2e2e';
-
-        // Baris Di Atas Shot By: Tanggal
-        const lineDate = dateStr || '2026/08/09';
-        const dateY = canvas.height - bottomMargin - Math.round(footerFontSize * 1.5);
-        ctx.fillStyle = textColor || '#3d3d3d';
-        ctx.fillText(lineDate, panelXCenter, dateY);
     }
 
 
-    // =========================================================================
-    // LAYOUT 8: POLAROID 3D REALISTIS (EFEK TIMBUL & BINDING)
-    // =========================================================================
-    else if (['type-8', 't8', 'polaroid-clean', 'type8'].includes(activeStyle)) {
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // ==================================================================================================================================================
+    // LAYOUT 12: POLAROID 3D REALISTIS (EFEK TIMBUL & BINDING)
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-12', 't12', 'polaroid-3d', 'type12'].includes(activeStyle)) {
         // 1. DIMENSI DAN PROPORSI KRUSIAL (SESUAI POLAROID ASLI)
         const baseDimension = Math.min(img.width, img.height);
 
@@ -1072,13 +1477,93 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         ctx.lineTo(paperX + polaroidW - Math.round(sideThick * 0.3), creaseY + 1);
         ctx.stroke();
         ctx.restore();
+    } else if (['type-side-bar-center', 'side-bar-center'].includes(activeStyle)) {
+        // 1. HITUNG DIMENSI (Frame Putih di Sisi Kanan)
+        const sideBarWidth = Math.round(img.width * 0.30); // Lebar bar samping (30% dari lebar foto)
+
+        canvas.width = img.width + sideBarWidth;
+        canvas.height = img.height;
+
+        // Background Canvas (Warna Solid Sisi Kanan)
+        ctx.fillStyle = bgColor || '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Gambar Foto Utama di Sisi Kiri
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+
+        // 2. OLAH DATA TEKS
+        const cameraDisplay = cameraStr ? cameraStr.toUpperCase() : '';
+
+        // EXIF tersusun vertikal kebawah (atau ganti array dengan baris vertikal)
+        const exifList = [
+            focalInput ? focalInput.value : '',
+            apertureInput ? apertureInput.value : '',
+            shutterInput ? shutterInput.value : '',
+            isoInput ? isoInput.value : ''
+        ].filter(Boolean);
+
+        // 3. TENTUKAN POSISI TENGAH BAR
+        const xCenterBar = img.width + (sideBarWidth / 2); // Titik tengah horizontal bar kanan
+        const yCenterBar = canvas.height / 2; // Titik tengah vertikal canvas
+
+        // 4. RENDER LOGO & TEKS BERURUTAN DI TENGAH
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        // Hitung total estimasi tinggi semua elemen agar seluruh blok bisa diposisikan pas di tengah
+        const fontSizeMain = Math.round(baseFontSize * 0.85);
+        const lineGap = Math.round(fontSizeMain * 0.4);
+
+        let logoH = 0;
+        let logoW = 0;
+        const hasLogo = logoImg && logoImg.complete && logoImg.naturalWidth !== 0;
+        if (hasLogo) {
+            const safeLogoAspect = logoImg.naturalWidth / logoImg.naturalHeight;
+            logoH = Math.round(sideBarWidth * 0.25 * logoScale);
+            logoW = Math.round(logoH * safeLogoAspect);
+        }
+
+        // Hitung titik Y paling atas dari seluruh grup elemen
+        const totalExifHeight = exifList.length * (fontSizeMain + lineGap);
+        const totalGroupHeight = logoH + (cameraDisplay ? fontSizeMain + 10 : 0) + 30 + totalExifHeight;
+        let currentY = yCenterBar - (totalGroupHeight / 2);
+
+        // A. RENDER LOGO (Paling Atas Grup)
+        if (hasLogo) {
+            ctx.drawImage(logoImg, xCenterBar - (logoW / 2), currentY, logoW, logoH);
+            currentY += logoH + 12;
+        }
+
+        // B. RENDER NAMA KAMERA
+        if (cameraDisplay) {
+            ctx.fillStyle = textColor || '#000000';
+            ctx.font = `700 ${Math.round(fontSizeMain * 1.1)}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.fillText(cameraDisplay, xCenterBar, currentY);
+            currentY += fontSizeMain + 30; // Jarak agak renggang ke EXIF
+        }
+
+        // C. RENDER DATA EXIF (Vertikal Baris demi Baris)
+        ctx.fillStyle = textColor === '#ffffff' ? '#dddddd' : '#444444';
+        ctx.font = `500 ${fontSizeMain}px -apple-system, BlinkMacSystemFont, sans-serif`;
+
+        exifList.forEach((item) => {
+            ctx.fillText(item, xCenterBar, currentY);
+            currentY += fontSizeMain + lineGap;
+        });
+
+        ctx.restore();
     }
 
-    // =========================================================================
-    // LAYOUT 9: SIDE PANEL KANAN (FOTO KIRI, PANEL INFORMASI KANAN)
-    // =========================================================================
-    else if (['type-9', 't9', 'side-panel', 'type9'].includes(activeStyle)) {
-        // 1. Tentukan Proporsi
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // =================================================================================================================================================
+    // LAYOUT 13: SIDE PANEL KANAN (FOTO KIRI, PANEL INFORMASI KANAN) LOGO TENGAH
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-13', 't13', 'side-panel-right', 'type13'].includes(activeStyle)) {
         const topBottomMargin = Math.round(img.height * 0.08); // Border atas & bawah foto
         const sideMargin = Math.round(img.width * 0.08); // Border samping kiri foto
         const rightPanelWidth = Math.round(img.width * 0.65); // Lebar area informasi kanan
@@ -1148,9 +1633,174 @@ function renderGenericFrame(canvas, ctx, img, logoImg, styleType, exifString, ca
         ctx.textBaseline = "bottom";
         ctx.fillText(pureExifText || 'f/4  |  1/125s  |  ISO400  |  2.5mm', panelXCenter, panelYBottom - 10 - subFontSize - 110);
     }
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // =================================================================================================================================================
+    // LAYOUT 14: SIDE PANEL KANAN (FOTO KIRI, PANEL INFORMASI KANAN) LOGO TENGAH
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-14', 't14', 'side-panel', 'type14'].includes(activeStyle)) {
+        // 1. Tentukan Proporsi
+        const topBottomMargin = Math.round(img.height * 0.08);
+        const sideMargin = Math.round(img.width * 0.08);
+        const rightPanelWidth = Math.round(img.width * 0.65);
+
+        // Total Dimensi Canvas
+        canvas.width = img.width + (sideMargin * 2) + rightPanelWidth;
+        canvas.height = img.height + (topBottomMargin * 2);
+
+        // 2. Background Dasar
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 3. Gambar Foto Utama di Sisi Kiri
+        const photoX = sideMargin;
+        const photoY = topBottomMargin;
+        ctx.drawImage(img, photoX, photoY, img.width, img.height);
+
+        // 4. Koordinat & Area Kerja Panel Kanan
+        const panelXCenter = photoX + img.width + (rightPanelWidth / 2) + (sideMargin / 2);
+        const panelYTop = photoY;
+        const panelYBottom = photoY + img.height;
+        const panelHeight = img.height;
+
+        ctx.textAlign = "center";
+
+        // ---------------------------------------------------------------------
+        // A. BLOK ATAS: LOGO KAMERA & NAMA KAMERA
+        // ---------------------------------------------------------------------
+        const logoHeight = Math.round(img.height * 0.060 * logoScale);
+        const logoW = Math.round(logoHeight * logoAspect);
+        const topBlockY = panelYTop + Math.round(panelHeight * 0.05); // Posisi dekat batas atas foto
+
+        // Gambar Logo
+        if (logoImg && logoImg.complete && logoImg.naturalWidth !== 0) {
+            ctx.drawImage(logoImg, panelXCenter - (logoW / 2), topBlockY, logoW, logoHeight);
+        }
+
+        // Nama Kamera
+        const typeFontSize = Math.round(baseDimension * 0.035 * textScale);
+        ctx.fillStyle = textColor;
+        ctx.font = `600 ${typeFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.textBaseline = "top";
+        ctx.fillText(cameraStr || 'EZ W-501L', panelXCenter, topBlockY + logoHeight + 15);
+
+        // ---------------------------------------------------------------------
+        // B. BLOK TENGAH: EXIF DATA
+        // ---------------------------------------------------------------------
+        const exifFontSize = Math.round(baseDimension * 0.028 * textScale);
+        const exifYCenter = panelYTop + (panelHeight / 2); // Posisi persis di tengah panel
+
+        ctx.fillStyle = textColor;
+        ctx.font = `500 ${exifFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.textBaseline = "middle";
+
+        // Memecah EXIF jika disajikan dalam format terpisah/multiline
+        const pureExifText = exifString || 'f/4  |  1/125s  |  ISO400  |  2.5mm';
+
+        // Opsi rendering EXIF (bisa baris tunggal atau multi-baris jika mengandung delimiter '|' atau break)
+        const exifLines = pureExifText.includes('|') ?
+            pureExifText.split('|').map(s => s.trim()) : [pureExifText];
+
+        const lineHeight = exifFontSize * 1.4;
+        const totalExifHeight = exifLines.length * lineHeight;
+        let startExifY = exifYCenter - (totalExifHeight / 2) + (lineHeight / 2);
+
+        exifLines.forEach((line) => {
+            ctx.fillText(line, panelXCenter, startExifY);
+            startExifY += lineHeight;
+        });
+
+        // ---------------------------------------------------------------------
+        // C. BLOK BAWAH: TANGGAL & SHOT BY
+        // ---------------------------------------------------------------------
+        const subFontSize = Math.round(exifFontSize * 0.85);
+        const bottomBlockY = panelYBottom - Math.round(panelHeight * 0.02); // Tepat di area bawah foto
+
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s*/i, '') : '';
+        const dateText = dateStr || '';
+
+        ctx.fillStyle = textColor === '#ffffff' ? '#bbbbbb' : '#555555';
+        ctx.font = `400 ${subFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.textBaseline = "bottom";
+
+        // Render Tanggal & Shot By secara bertingkat di paling bawah
+        let currentBottomY = bottomBlockY;
+
+        if (authorClean) {
+            ctx.fillText(`Shot By.${authorClean}`, panelXCenter, currentBottomY);
+            currentBottomY -= (subFontSize + 8);
+        }
+
+        if (dateText) {
+            ctx.fillText(dateText, panelXCenter, currentBottomY);
+        }
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // =================================================================================================================================================
+    // LAYOUT 15: SIDE PANEL KANAN (FOTO KIRI, PANEL INFORMASI KANAN) LOGO TENGAH
+    // ==================================================================================================================================================
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    else if (['type-15', 't15', 'side-panel', 'type15'].includes(activeStyle)) {
+        // 1. Tentukan Proporsi
+        const topBottomMargin = Math.round(img.height * 0.08);
+        const sideMargin = Math.round(img.width * 0.08);
+        const rightPanelWidth = Math.round(img.width * 0.65);
+
+        // Total Dimensi Canvas
+        canvas.width = img.width + (sideMargin * 2) + rightPanelWidth;
+        canvas.height = img.height + (topBottomMargin * 2);
+
+        // 2. Background Dasar
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 3. Gambar Foto Utama di Sisi Kiri
+        const photoX = sideMargin;
+        const photoY = topBottomMargin;
+        ctx.drawImage(img, photoX, photoY, img.width, img.height);
+
+        // 4. Koordinat & Area Kerja Panel Kanan
+        const panelXCenter = photoX + img.width + (rightPanelWidth / 2) + (sideMargin / 2);
+        const panelYCenter = photoY + (img.height / 2); // Titik tengah vertikal panel kanan
+
+        // 5. OLAH DATA TEKS (HANYA TANGGAL & SHOT BY)
+        const authorClean = authorStr ? authorStr.replace(/^Shot by\s+/i, '') : '';
+        const dateText = dateStr || '';
+
+        const fontSize = Math.round(baseDimension * 0.03 * textScale);
+        const lineGap = Math.round(fontSize * 0.6); // Spasi vertikal antarbaris
+
+        // Buat daftar baris yang akan ditampilkan
+        const lines = [];
+        if (dateText) lines.push(dateText);
+        if (authorClean) lines.push(`Shot By ${authorClean}`);
+
+        // 6. RENDER TEKS PRESISI DI TENGAH PANEL
+        if (lines.length > 0) {
+            ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = textColor;
+            ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+
+            // Hitung titik Y awal agar seluruh grup baris seimbang di tengah
+            const totalHeight = (lines.length * fontSize) + ((lines.length - 1) * lineGap);
+            let currentY = panelYCenter - (totalHeight / 2) + (fontSize / 2);
+
+            lines.forEach((line) => {
+                ctx.fillText(line, panelXCenter, currentY);
+                currentY += fontSize + lineGap;
+            });
+
+            ctx.restore();
+        }
+    }
 }
-
-
 
 
 
